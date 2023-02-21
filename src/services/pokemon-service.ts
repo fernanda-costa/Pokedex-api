@@ -9,7 +9,7 @@ export const getPokemonById = async (nome: string) => {
 }
 
 export const addPokemon = async (pokemon: any) => {
-    return await db.query("INSERT INTO POKEMON (poke_nome, usuario, tipo, habilidades) VALUES ($1, $2, $3, $4);", [pokemon.nome, pokemon.usuario, pokemon.tipo, pokemon.habilidades]);
+    return await db.query("INSERT INTO POKEMON (tipo, usuario, tipo, habilidades) VALUES ($1, $2, $3, $4);", [pokemon.nome, pokemon.usuario, pokemon.tipo, pokemon.habilidades]);
 }
 
 export const deletePokemon = async (nome: string) => {
@@ -18,4 +18,8 @@ export const deletePokemon = async (nome: string) => {
 
 export const updatePokemon = async () => {
     return await db.query('UPDATE POKEMON (poke_nome, usuario, tipo, habilidades) VALUES ($1, $2, $3, $4);');
+}
+
+export const  getPokemonsDashboard = async () => {
+    return await db.query('SELECT * FROM POKEMON');
 }

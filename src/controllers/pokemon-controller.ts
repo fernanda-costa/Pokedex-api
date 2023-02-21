@@ -1,24 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
 import * as pokemonService from '../services/pokemon-service';
+import Pokemon from '../models/pokemon';
 
-interface Post {
-    userId: Number;
-    id: Number;
-    title: String;
-    body: String;
-}
 
 const getPokemons = async (req: Request, res: Response, next: NextFunction) => {
-    let result: any = await pokemonService.getPokemons();
-    let posts: any = result;
+    let result: Pokemon[] = await pokemonService.getPokemons();
     return res.status(200).json(result);
 };
+
+const getPokemonsDashboard = async (req: Request, res: Response, next: NextFunction) => {
+    let result: Pokemon[] = await pokemonService.getPokemonsDashboard();
+    return res.status(200).json(result);
+};
+
 
 const getPokemon = async (req: Request, res: Response, next: NextFunction) => {
     let id: string = req.params.id;
     let result: any = await pokemonService.getPokemonById(id);
-    let post: Post = result.data;
+    let post: Pokemon = result?.[0];
     return res.status(200).json({
         message: post
     });
