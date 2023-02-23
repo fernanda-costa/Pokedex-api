@@ -17,7 +17,6 @@ const getUsuarios = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
     let result: Usuario[] = await pokemonService.getUsuario(req.body.usuario, req.body.senha);
     let loginSuccesseful: boolean = result?.length > 0;
     return res.status(200).json({ loginSuccesseful });

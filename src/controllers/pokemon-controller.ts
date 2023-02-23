@@ -1,16 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import axios, { AxiosResponse } from 'axios';
 import * as pokemonService from '../services/pokemon-service';
 import Pokemon from '../models/pokemon';
 
 
 const getPokemons = async (req: Request, res: Response, next: NextFunction) => {
-    let result: Pokemon[] = await pokemonService.getPokemons();
-    return res.status(200).json(result);
-};
-
-const getPokemonsDashboard = async (req: Request, res: Response, next: NextFunction) => {
-    let result: Pokemon[] = await pokemonService.getPokemonsDashboard();
+    const tipoFiltro = req.query.filtro;
+    const valorFiltro = req.query.valor;
+    let result: Pokemon[] = await pokemonService.getPokemons(tipoFiltro, valorFiltro);
     return res.status(200).json(result);
 };
 
@@ -52,4 +48,20 @@ const addPokemon = async (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-export default { getPokemons, getPokemon, updatePokemon, deletePokemon, addPokemon };
+const getPokemonsTotal = async (req: Request, res: Response, next: NextFunction) => {
+    let result: any[] = await pokemonService.getPokemonsTotal();
+    const total =  result?.[0]?.total || 0; 
+    return res.status(200).json({"total": total });
+};
+
+const getPokemonsTopTipos = async (req: Request, res: Response, next: NextFunction) => {
+    let result: Pokemon[] = await pokemonService.getPokemonsTopTipo();
+    return res.status(200).json(result);
+};
+
+const getPokemonsTopHabilidades = async (req: Request, res: Response, next: NextFunction) => {
+    let result: Pokemon[] = await pokemonService.getPokemonsTopHabilidade();
+    return res.status(200).json(result);
+};
+
+export default { getPokemons, getPokemon, updatePokemon, deletePokemon, addPokemon, getPokemonsTotal, getPokemonsTopTipos, getPokemonsTopHabilidades };
