@@ -40,7 +40,6 @@ const deletePokemon = async (req: Request, res: Response, next: NextFunction) =>
 
 const addPokemon = async (req: Request, res: Response, next: NextFunction) => {
     let body: string = req.body;
-    console.log(body);
     let result: any = await pokemonService.addPokemon(body);
 
     return res.status(200).json({
